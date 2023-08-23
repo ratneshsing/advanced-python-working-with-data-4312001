@@ -8,10 +8,12 @@ numbers = [42, 54, 19, 17, 23, 31, 16, 4]
 names = ["Jeff", "Bill", "Addie", "Stephanie", "Zach", "Lukas", "Joe", "Stacy"]
 
 # TODO: the sorted() function can be used to return a new list with sorted data
-
+newlst=sorted(numbers)
+print(newlst)
 
 # TODO: alternately, you can use the list object's sort() method, which sorts the list in-place
-
+names.sort(reverse=True)
+print(names)
 
 # TODO: To sort custom objects, we can tell the sort function which property to use
 # by specifying a key function
@@ -20,9 +22,22 @@ names = ["Jeff", "Bill", "Addie", "Stephanie", "Zach", "Lukas", "Joe", "Stacy"]
 # with open("../../30DayQuakes.json", "r") as datafile:
 #     data = json.load(datafile)
 
+with open("../../30DayQuakes.json","r") as datafile:
+    data=json.load(datafile)
 
+def getmag(dataitem):
+    magnitude = dataitem["properties"]["mag"]
+    if magnitude is None:
+        magnitude =0
+    return float(magnitude)
 # def getmag(dataitem):
 #     magnitude = dataitem["properties"]["mag"]
 #     if (magnitude is None):
 #         magnitude = 0
 #     return float(magnitude)
+
+
+data["features"].sort(key = getmag,reverse=True)
+for i in range(1,10):
+    print(data["features"][i]["properties"]["place"],
+          data["features"][i]["properties"]["mag"])
